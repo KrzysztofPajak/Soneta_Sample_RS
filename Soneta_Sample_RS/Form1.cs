@@ -2,13 +2,6 @@
 using Soneta.Business.App;
 using Soneta.Business.UI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Soneta_Sample_RS
@@ -27,13 +20,14 @@ namespace Soneta_Sample_RS
         private void Form1_Load(object sender, EventArgs e)
         {
             Login login = CreateLogin();
-            using (Session session = login.CreateSession(false, false))
-            {
-                var context = Context.Empty.Clone(session);
-                var storage = context.Login != null ? context.Login.StorageProvider : null;
-                IReportService rs;
-                context.Session.GetService(out rs);
-            }
+            if (login != null)
+                using (Session session = login.CreateSession(false, false))
+                {
+                    var context = Context.Empty.Clone(session);
+                    var storage = context.Login != null ? context.Login.StorageProvider : null;
+                    IReportService rs;
+                    context.Session.GetService(out rs);
+                }
         }
 
         public Login CreateLogin()
