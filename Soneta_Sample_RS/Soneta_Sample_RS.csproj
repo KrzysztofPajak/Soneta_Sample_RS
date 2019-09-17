@@ -38,6 +38,11 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Soneta\enova365 1907.0.0.16808\Soneta.Business.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Soneta.Handel, Version=1907.0.0.87, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Soneta\enova365 1907.0.0.16808\Soneta.Handel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Soneta.Start, Version=1907.0.0.87, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Soneta\enova365 1907.0.0.16808\Soneta.Start.dll</HintPath>

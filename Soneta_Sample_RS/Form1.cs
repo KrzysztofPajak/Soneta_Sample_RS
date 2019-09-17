@@ -1,6 +1,7 @@
 ﻿using Soneta.Business;
 using Soneta.Business.App;
 using Soneta.Business.UI;
+using Soneta.Handel;
 using System;
 using System.Windows.Forms;
 
@@ -11,7 +12,8 @@ namespace Soneta_Sample_RS
         public Form1()
         {
             Soneta.Start.Loader loader = new Soneta.Start.Loader();
-            loader.WithExtensions = false;
+            //loader.WithExtensions = true;
+            loader.WithExtra = true;
             loader.Load();
 
             InitializeComponent();
@@ -23,17 +25,38 @@ namespace Soneta_Sample_RS
             if (login != null)
                 using (Session session = login.CreateSession(false, false))
                 {
-                    var context = Context.Empty.Clone(session);
-                    var storage = context.Login != null ? context.Login.StorageProvider : null;
-                    IReportService rs;
-                    context.Session.GetService(out rs);
+                    using (var t = session.Logout(true))
+                    {
+                        var context = Context.Empty.Clone(session);
+                        var storage = context.Login != null ? context.Login.StorageProvider : null;
+                        IReportService rs;
+                        
+                        HandelModule hm = HandelModule.GetInstance(session);
+                        DokumentHandlowy dok = hm.DokHandlowe.NumerWgNumeruDokumentu["FV/000004/19"];
+                        context.Set(dok);
+                        context.Session.GetService(out rs);
+
+                        var reportResult = new ReportResult //rezultat służący do uruchamiania raportów
+                        {
+
+                            Caption = "Generowanie faktury", //nazwa zadania
+                            Context = context, //kontekst raportu
+                            Preview = false, //nie pokazuj okna z podglądem raportu
+                            //DataType = dok.GetType(), //typ dla którego będzie generowany wydruk
+                            Format = ReportResultFormat.PDF, //format zapisu
+                            TemplateFileName = "XtraReports/Wzorce użytkownika/dokument_sprzedazy.repx",
+                            TemplateFileSource = AspxSource.Local, //wskazanie na aspx wydruku
+                        };
+                        var stream = rs.GenerateReport(reportResult);
+                        t.Commit();
+                    }
                 }
         }
 
         public Login CreateLogin()
         {
             Login login;
-            MsSqlDatabase msdb = new MsSqlDatabase("enova", @"DESKTOP-LDPQC0R\SQL2017", "enova", "sa", "sa", false);
+            MsSqlDatabase msdb = new MsSqlDatabase("enova", @"DESKTOP-LDPQC0R\SQL2017", "enova", "sa", "kwin567", false);
             msdb.Active = true;
             try
             {
