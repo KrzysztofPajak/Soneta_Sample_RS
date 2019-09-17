@@ -56,7 +56,7 @@ namespace Soneta_Sample_RS
         public Login CreateLogin()
         {
             Login login;
-            MsSqlDatabase msdb = new MsSqlDatabase("enova", @"DESKTOP-LDPQC0R\SQL2017", "enova", "sa", "kwin567", false);
+            MsSqlDatabase msdb = new MsSqlDatabase("enova", @"DESKTOP-LDPQC0R\SQL2017", "enova", "sa", "sa", false);
             msdb.Active = true;
             try
             {
